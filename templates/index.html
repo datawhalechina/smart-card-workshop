@@ -56,17 +56,17 @@
 
         .preview-container {
             border: none;
-            padding: 15px;
-            margin-top: 20px;
-            min-height: 300px;
+            padding: 0;
+            margin-top: 0;
+            min-height: 200px;
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
         }
 
-        #htmlPreview {
+        #htmlPreview, #htmlPreview2 {
             width: 100%;
-            height: 500px;
+            height: 400px;
             border: none;
             border-radius: 8px;
             overflow: hidden;
@@ -123,7 +123,7 @@
         }
 
         .card-body {
-            padding: 1.5rem;
+            padding: 1rem;
         }
 
         .form-control, .form-select {
@@ -237,8 +237,8 @@
     </header>
 
     <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-6">
+        <div class="row g-4">
+            <div class="col-md-5">
                 <div class="card">
                     <div class="card-header">
                         <h5><i class="fas fa-magic me-2"></i>生成HTML</h5>
@@ -271,11 +271,41 @@
                                         placeholder="例如: 创建一个包含标题、图片和联系表单的响应式网页"></textarea>
                                 </div>
                                 <div class="mb-3">
+                                    <label class="form-label">模型选择方式:</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="modelSelectType" id="singleModelRadio" value="single" checked>
+                                        <label class="form-check-label" for="singleModelRadio">
+                                            单模型
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="modelSelectType" id="multiModelRadio" value="multi">
+                                        <label class="form-check-label" for="multiModelRadio">
+                                            多模型对比
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-3" id="singleModelContainer">
                                     <label for="modelSelect" class="form-label">选择模型:</label>
                                     <select class="form-select" id="modelSelect">
                                         <option value="deepseek-v3-250324">deepseek-v3-250324</option>
                                         <option value="deepseek-r1-250120">deepseek-r1-250120</option>
                                     </select>
+                                </div>
+                                <div class="mb-3" id="multiModelContainer" style="display:none;">
+                                    <label class="form-label">选择多个模型:</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input model-checkbox" type="checkbox" value="deepseek-v3-250324" id="model1Checkbox">
+                                        <label class="form-check-label" for="model1Checkbox">
+                                            deepseek-v3-250324
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input model-checkbox" type="checkbox" value="deepseek-r1-250120" id="model2Checkbox">
+                                        <label class="form-check-label" for="model2Checkbox">
+                                            deepseek-r1-250120
+                                        </label>
+                                    </div>
                                 </div>
                                 <button id="promptGenerateBtn" class="btn btn-primary"><i class="fas fa-wand-magic-sparkles me-2"></i>根据需求生成</button>
                             </div>
@@ -345,27 +375,56 @@
                     </div>
                 </div>
 
-                <div class="card mt-4" id="downloadCard" style="display: none;">
-                    <div class="card-header">
-                        <h5><i class="fas fa-download me-2"></i>下载选项</h5>
-                    </div>
-                    <div class="card-body">
-                        <p>预览满意后，您可以选择以下格式下载：</p>
-                        <div class="btn-toolbar">
-                            <button id="downloadHtmlBtn" class="btn btn-success me-2"><i class="fas fa-file-code me-2"></i>下载HTML</button>
-                            <button id="downloadImageBtn" class="btn btn-info"><i class="fas fa-file-image me-2"></i>下载卡片图片</button>
-                        </div>
-                    </div>
-                </div>
+                <!-- 下载选项卡片已移动到各个模型预览下方 -->
             </div>
 
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h5><i class="fas fa-eye me-2"></i>卡片预览</h5>
+            <div class="col-md-7">
+                <div class="row g-0">
+                    <div class="col-md-6 pe-2">
+                        <div class="card mb-2">
+                            <div class="card-header">
+                                <h5><i class="fas fa-eye me-2"></i>模型1预览</h5>
+                            </div>
+                            <div class="card-body preview-container p-0">
+                                <iframe id="htmlPreview" class="fade-in"></iframe>
+                            </div>
+                        </div>
+                        <!-- 模型1下载选项卡片 -->
+                        <div class="card" id="downloadCard1" style="display: none;">
+                            <div class="card-header">
+                                <h5><i class="fas fa-download me-2"></i>下载选项</h5>
+                            </div>
+                            <div class="card-body">
+                                <p>预览满意后，您可以选择以下格式下载：</p>
+                                <div class="btn-toolbar">
+                                    <button id="downloadHtmlBtn1" class="btn btn-success me-2"><i class="fas fa-file-code me-2"></i>下载HTML</button>
+                                    <button id="downloadImageBtn1" class="btn btn-info"><i class="fas fa-file-image me-2"></i>下载卡片图片</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body preview-container p-0">
-                        <iframe id="htmlPreview" class="fade-in"></iframe>
+                    <div class="col-md-6 ps-2">
+                        <div class="card mb-2">
+                            <div class="card-header">
+                                <h5><i class="fas fa-eye me-2"></i>模型2预览</h5>
+                            </div>
+                            <div class="card-body preview-container p-0">
+                                <iframe id="htmlPreview2" class="fade-in"></iframe>
+                            </div>
+                        </div>
+                        <!-- 模型2下载选项卡片 -->
+                        <div class="card" id="downloadCard2" style="display: none;">
+                            <div class="card-header">
+                                <h5><i class="fas fa-download me-2"></i>下载选项</h5>
+                            </div>
+                            <div class="card-body">
+                                <p>预览满意后，您可以选择以下格式下载：</p>
+                                <div class="btn-toolbar">
+                                    <button id="downloadHtmlBtn2" class="btn btn-success me-2"><i class="fas fa-file-code me-2"></i>下载HTML</button>
+                                    <button id="downloadImageBtn2" class="btn btn-info"><i class="fas fa-file-image me-2"></i>下载卡片图片</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -378,31 +437,120 @@
         let currentFileId = null;
         let currentUrls = {
             html: null,
-            image: null
+            image: null,
+            html2: null,
+            image2: null
         };
 
         // 显示生成的HTML预览
-        async function showPreview(htmlUrl) {
+        async function showPreview(htmlUrl, previewId = 'htmlPreview', downloadCardId = 'downloadCard1') {
             try {
                 // 获取HTML内容用于预览
                 const response = await fetch(htmlUrl);
                 const htmlContent = await response.text();
                 
                 // 在iframe中显示预览
-                document.getElementById('htmlPreview').srcdoc = htmlContent;
+                document.getElementById(previewId).srcdoc = htmlContent;
                 
-                // 显示下载选项
-                document.getElementById('downloadCard').style.display = 'block';
+                // 显示对应的下载选项
+                document.getElementById(downloadCardId).style.display = 'block';
             } catch (error) {
                 console.error('Error loading preview:', error);
                 alert('加载预览失败: ' + error.message);
             }
         }
+        
+        // 处理预览显示
+        async function handlePreviewDisplay(data, modelSelectType, models) {
+            if (modelSelectType === 'multi' && models.length > 1) {
+                // 多模型模式下，解析返回的HTML路径
+                currentUrls = {
+                    html: data.html_path,
+                    image: data.image_path,
+                    html2: data.html_path2,
+                    image2: data.image_path2
+                };
+                
+                // 检查是否有第二个模型的路径
+                if (data.html_path2) {
+                    // 如果有两个模型的路径，分别加载到不同的预览框
+                    // 获取每个模型的单独HTML路径（而不是组合HTML）
+                    const firstModelFileId = `${currentFileId}_model_0`;
+                    const secondModelFileId = `${currentFileId}_model_1`;
+                    
+                    const firstModelHtmlPath = `/api/download-html/${firstModelFileId}`;
+                    const secondModelHtmlPath = `/api/download-html/${secondModelFileId}`;
+                    
+                    try {
+                        // 加载第一个模型到第一个预览框
+                        await showPreview(firstModelHtmlPath, 'htmlPreview', 'downloadCard1');
+                        
+                        // 加载第二个模型到第二个预览框
+                        await showPreview(secondModelHtmlPath, 'htmlPreview2', 'downloadCard2');
+                        
+                        // 更新URL引用
+                        currentUrls.html = firstModelHtmlPath;
+                        currentUrls.html2 = secondModelHtmlPath;
+                    } catch (e) {
+                        console.warn('无法加载模型预览:', e);
+                        // 如果单独加载失败，回退到显示组合HTML
+                        await showPreview(data.html_path, 'htmlPreview', 'downloadCard1');
+                        document.getElementById('downloadCard2').style.display = 'none';
+                    }
+                } else {
+                    // 如果后端没有返回第二个模型的路径，显示组合HTML
+                    await showPreview(data.html_path, 'htmlPreview', 'downloadCard1');
+                    document.getElementById('htmlPreview2').srcdoc = '<div style="padding:20px;text-align:center;color:#666;"><p>无法加载第二个模型预览</p><p>请检查后端是否正确返回了两个模型的数据</p></div>';
+                    document.getElementById('downloadCard2').style.display = 'none';
+                }
+            } else {
+                // 单模型模式
+                currentUrls = {
+                    html: data.html_path,
+                    image: data.image_path
+                };
+                
+                // 显示预览
+                await showPreview(data.html_path, 'htmlPreview', 'downloadCard1');
+                // 清空第二个预览框
+                document.getElementById('htmlPreview2').srcdoc = '<div style="padding:20px;text-align:center;color:#666;"><p>未选择第二个模型</p><p>请在左侧选择多模型对比模式并选择两个模型</p></div>';
+                document.getElementById('downloadCard2').style.display = 'none';
+            }
+        }
+
+        // 切换单模型/多模型选择
+        document.querySelectorAll('input[name="modelSelectType"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.value === 'single') {
+                    document.getElementById('singleModelContainer').style.display = 'block';
+                    document.getElementById('multiModelContainer').style.display = 'none';
+                } else {
+                    document.getElementById('singleModelContainer').style.display = 'none';
+                    document.getElementById('multiModelContainer').style.display = 'block';
+                }
+            });
+        });
 
         // 根据需求生成HTML
         document.getElementById('promptGenerateBtn').addEventListener('click', async function () {
             const prompt = document.getElementById('promptInput').value.trim();
-            const model = document.getElementById('modelSelect').value;
+            const modelSelectType = document.querySelector('input[name="modelSelectType"]:checked').value;
+            let models = [];
+            
+            if (modelSelectType === 'single') {
+                // 单模型模式
+                models.push(document.getElementById('modelSelect').value);
+            } else {
+                // 多模型模式
+                document.querySelectorAll('.model-checkbox:checked').forEach(checkbox => {
+                    models.push(checkbox.value);
+                });
+                
+                if (models.length === 0) {
+                    alert('请至少选择一个模型');
+                    return;
+                }
+            }
             
             if (!prompt) {
                 alert('请输入您的需求');
@@ -424,7 +572,7 @@
                     body: JSON.stringify({
                         mode: 'prompt',
                         prompt: prompt,
-                        model: model,
+                        model: models,
                         temperature: 0.7
                     })
                 });
@@ -438,13 +586,9 @@
                 
                 // 保存返回的信息
                 currentFileId = data.file_id;
-                currentUrls = {
-                    html: data.html_path,
-                    image: data.image_path
-                };
                 
-                // 显示预览
-                await showPreview(data.html_path);
+                // 调用预览处理函数
+                await handlePreviewDisplay(data, modelSelectType, models);
                 
                 // 显示LLM原始响应（如果有）
                 if (data.raw_llm_response) {
@@ -495,13 +639,9 @@
                 
                 // 保存返回的信息
                 currentFileId = data.file_id;
-                currentUrls = {
-                    html: data.html_path,
-                    image: data.image_path
-                };
                 
-                // 显示预览
-                await showPreview(data.html_path);
+                // 调用预览处理函数 - 对于粘贴模式，我们假设它是单模型模式
+                await handlePreviewDisplay(data, 'single', ['default']);
                 
             } catch (error) {
                 console.error('Error:', error);
@@ -679,19 +819,39 @@
             }
         });
 
-        // 下载HTML按钮
-        document.getElementById('downloadHtmlBtn').addEventListener('click', function () {
+        // 下载模型1的HTML按钮
+        document.getElementById('downloadHtmlBtn1').addEventListener('click', function() {
             if (currentUrls.html) {
                 window.open(currentUrls.html, '_blank');
+            } else {
+                alert('没有可下载的HTML文件');
             }
         });
-
-        // 下载图片按钮
-        document.getElementById('downloadImageBtn').addEventListener('click', function () {
+        
+        // 下载模型1的图片按钮
+        document.getElementById('downloadImageBtn1').addEventListener('click', function() {
             if (currentUrls.image) {
                 window.open(currentUrls.image, '_blank');
             } else {
-                alert('卡片图片生成失败或不可用');
+                alert('没有可下载的图片文件');
+            }
+        });
+        
+        // 下载模型2的HTML按钮
+        document.getElementById('downloadHtmlBtn2').addEventListener('click', function() {
+            if (currentUrls.html2) {
+                window.open(currentUrls.html2, '_blank');
+            } else {
+                alert('没有可下载的HTML文件');
+            }
+        });
+        
+        // 下载模型2的图片按钮
+        document.getElementById('downloadImageBtn2').addEventListener('click', function() {
+            if (currentUrls.image2) {
+                window.open(currentUrls.image2, '_blank');
+            } else {
+                alert('没有可下载的图片文件');
             }
         });
     </script>
