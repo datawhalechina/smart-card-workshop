@@ -36,7 +36,7 @@ const HomePage: React.FC = () => {
               <a href="#experience" className="text-gray-600 hover:text-blue-600 transition-colors">体验</a>
               <a href="#showcase" className="text-gray-600 hover:text-blue-600 transition-colors">展示</a>
               <Button asChild variant="primary" size="sm">
-                <Link href="/dashboard">立即体验</Link>
+                <Link href="/auth/signin">登录 / 注册</Link>
               </Button>
             </div>
           </div>
@@ -206,7 +206,7 @@ const HomePage: React.FC = () => {
 
           <div className="text-center mt-12">
             <Button asChild size="lg" className="group">
-              <Link href="/dashboard">
+              <Link href="/auth/signin">
                 立即开始体验
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </Link>
