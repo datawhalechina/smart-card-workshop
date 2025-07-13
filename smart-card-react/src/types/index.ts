@@ -1,16 +1,26 @@
 // 智能卡片工坊项目类型定义
 
-export interface Card {
-  id: string;
+export interface BaseCard {
   title: string;
   content: string;
   htmlContent: string;
   imageUrl?: string;
-  createdAt: Date;
-  updatedAt: Date;
   tags: string[];
   author?: string;
   category?: string;
+}
+
+export interface Card extends BaseCard {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ShowcaseCard extends Card {
+  thumbnailUrl: string;
+  views: number;
+  likes: number;
+  forks: number;
 }
 
 export interface CardTemplate {
@@ -60,7 +70,7 @@ export interface WebScrapingResponse {
 }
 
 export interface ImageExportOptions {
-  format: 'png' | 'jpg' | 'pdf';
+  format: 'png' | 'jpeg';
   quality: number;
   width?: number;
   height?: number;
