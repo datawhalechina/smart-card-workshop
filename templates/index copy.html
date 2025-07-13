@@ -223,13 +223,6 @@
             animation: fadeIn 0.5s ease;
         }
     </style>
-    <!-- 引入html2canvas库 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" 
-            integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" 
-            crossorigin="anonymous" 
-            referrerpolicy="no-referrer"></script>
-    <!-- 引入我们自己的html2image.js -->
-    <script src="/static/html2image.js"></script>
 </head>
 
 <body>
@@ -695,80 +688,12 @@
 
         // 下载图片按钮
         document.getElementById('downloadImageBtn').addEventListener('click', function () {
-            // 获取预览iframe中的卡片内容
-            const iframe = document.getElementById('htmlPreview');
-            if (!iframe || !iframe.contentWindow) {
-                alert('卡片预览不可用，无法导出图片');
-                return;
-            }
-
-            // 显示加载中提示
-            const loading = document.getElementById('loading');
-            if (loading) loading.style.display = 'block';
-
-            try {
-                // 检查html2canvas是否已加载
-                if (typeof html2canvas === 'undefined') {
-                    const script = document.createElement('script');
-                    script.src = "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
-                    script.onload = function() {
-                        // 库加载后执行导出
-                        exportCardAsImage(iframe);
-                    };
-                    script.onerror = function() {
-                        if (loading) loading.style.display = 'none';
-                        alert('无法加载图片导出工具，请检查网络连接');
-                    };
-                    document.head.appendChild(script);
-                } else {
-                    // 如果已加载，直接导出
-                    exportCardAsImage(iframe);
-                }
-            } catch (error) {
-                console.error('导出图片时出错:', error);
-                if (loading) loading.style.display = 'none';
-                alert('导出图片失败: ' + error.message);
+            if (currentUrls.image) {
+                window.open(currentUrls.image, '_blank');
+            } else {
+                alert('卡片图片生成失败或不可用');
             }
         });
-
-        // 导出卡片为图片的函数
-        function exportCardAsImage(iframe) {
-            // 获取iframe中的卡片元素（通常是第一个主要容器）
-            const cardElement = iframe.contentWindow.document.querySelector('.card') || 
-                               iframe.contentWindow.document.body;
-            
-            // 使用html2canvas捕获元素
-            html2canvas(cardElement, {
-                allowTaint: true,
-                useCORS: true,
-                scale: 2, // 提高分辨率
-                backgroundColor: null, // 保持背景透明
-                logging: false
-            }).then(canvas => {
-                // 转换为数据URL
-                const imageData = canvas.toDataURL('image/png');
-                
-                // 创建下载链接
-                const link = document.createElement('a');
-                link.download = '智能卡片_' + new Date().toISOString().slice(0, 10) + '.png';
-                link.href = imageData;
-                
-                // 模拟点击下载
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                
-                // 隐藏加载提示
-                const loading = document.getElementById('loading');
-                if (loading) loading.style.display = 'none';
-            }).catch(error => {
-                console.error('导出图片时出错:', error);
-                // 隐藏加载提示
-                const loading = document.getElementById('loading');
-                if (loading) loading.style.display = 'none';
-                alert('导出图片失败: ' + error.message);
-            });
-        }
     </script>
 </body>
 

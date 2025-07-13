@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML导出为图片演示</title>
+    <!-- 引入html2canvas库，确保使用完整CDN链接，并添加完整性检查 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" 
+            integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" 
+            crossorigin="anonymous" 
+            referrerpolicy="no-referrer"></script>
+            
+    <!-- 备用CDN，如果上面的无法加载 -->
+    <script>
+        if (typeof html2canvas === 'undefined') {
+            console.log('尝试从备用CDN加载html2canvas');
+            let script = document.createElement('script');
+            script.src = "https://html2canvas.hertzen.com/dist/html2canvas.min.js";
+            script.onload = function() {
+                console.log('html2canvas已从备用CDN加载');
+                if (typeof initHtml2Image === 'function') {
+                    initHtml2Image();
+                }
+            };
+            script.onerror = function() {
+                console.error('备用CDN也无法加载html2canvas');
+                alert('无法加载html2canvas库，请检查您的网络连接。');
+            };
+            document.head.appendChild(script);
+        }
+    </script>
+    
+    <!-- 引入我们自己的html2image.js -->
+    <script src="../html2image.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .instructions {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: left;
+        }
+        .card {
+            width: 393px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 165, 0, 0.3);
+            overflow: hidden;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .header {
+            padding: 25px;
+            text-align: center;
+            background-color: rgba(255, 215, 0, 0.7);
+            border-bottom: 2px solid #FF8C00;
+        }
+        .content {
+            padding: 25px;
+            text-align: left;
+        }
+        .footer {
+            margin-top: 30px;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>HTML导出为图片演示</h1>
+        
+        <div class="instructions">
+            <h3>使用说明：</h3>
+            <ol>
+                <p>这个演示展示了如何使用html2image.js将HTML元素导出为图片：</p>
+                <li>下面的卡片是一个示例HTML元素</li>
+                <li>点击"导出为图片"按钮将卡片保存为PNG图片</li>
+                <li>图片将自动下载到您的设备上</li>
+            </ol>
+        </div>
+        
+        <div id="card-container" class="card">
+            <div class="header">
+                <h2>示例卡片</h2>
+            </div>
+            <div class="content">
+                <p>这是一个示例卡片，将被导出为图片。</p>
+                <p>您可以在卡片中添加任何HTML内容，包括文本、图像、表格等。</p>
+                <p>卡片的样式和内容将会被完整地保存到图片中。</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>注意：某些复杂的CSS效果（如阴影和渐变）可能在导出的图片中效果略有不同。</p>
+        </div>
+    </div>
+
+    <script>
+        // 包装初始化函数，确保html2canvas已加载
+        function initHtml2Image() {
+            // 检查html2canvas是否已加载
+            if (typeof html2canvas === 'undefined') {
+                console.error('html2canvas库未加载，将在库加载后重试');
+                return;
+            }
+            
+            console.log('html2canvas已加载，初始化导出按钮');
+            // 为卡片添加导出按钮
+            addExportButton('card-container', '导出卡片为图片');
+        }
+        
+        // 页面加载完成后，添加导出按钮
+        document.addEventListener('DOMContentLoaded', function() {
+            // 检查html2canvas是否已加载
+            if (typeof html2canvas !== 'undefined') {
+                initHtml2Image();
+            } else {
+                console.log('等待html2canvas加载');
+                // html2canvas还未加载，初始化函数将在library加载后调用
+            }
+        });
+    </script>
+</body>
+</html>
