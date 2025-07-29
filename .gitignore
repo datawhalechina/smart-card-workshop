@@ -40,7 +40,7 @@ output/
 # static/
 # *.png
 *.pdf
-*.html
+# *.html
 !templates/*.html
 
 # IDE相关

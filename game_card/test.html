@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏王卡片</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #1a1a1a;
+            margin: 0;
+            font-family: 'Yu-Gi-Oh!', sans-serif;
+        }
+        .yugioh-card {
+            width: 340px;
+            height: 500px;
+            position: relative;
+            background: #fdeeb3; /* Normal Monster Card Color */
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            border: 12px solid #a98248;
+        }
+        .card-header {
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: auto;
+            background: transparent;
+        }
+        .card-name {
+            color: #000;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: none;
+            width: auto;
+            background-color: #fdeeb3;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        .attribute {
+            position: static;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: #8B4513; /* EARTH Attribute */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            border: 2px solid #fff;
+            font-size: 10px;
+        }
+        .card-image {
+            height: 250px;
+            background-color: #000;
+            background-image: url('https://picsum.photos/seed/yugioh/300/220.jpg');
+            background-size: cover;
+            background-position: center;
+            border: 5px solid #a98248;
+            margin: 0 10px;
+        }
+        .card-level {
+            position: static;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            padding-left: 15px;
+            gap: 4px;
+            margin-top: -5px;
+            margin-bottom: 5px;
+        }
+        .level-star {
+            width: 20px;
+            height: 20px;
+            background-color: #f9a602;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        }
+        .card-info {
+            padding: 10px;
+            background-color: #fdf3d8; /* Parchment-like background */
+            margin: 10px;
+            border: 2px solid #a98248;
+        }
+        .card-type {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        .card-description {
+            font-size: 12px;
+            line-height: 1.4;
+            height: 60px;
+            overflow: hidden;
+            text-align: justify;
+        }
+        .card-atk-def {
+            position: absolute;
+            bottom: 40px;
+            right: 25px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .atk, .def {
+            display: inline;
+            background: transparent;
+            color: #000;
+            padding: 0;
+            border-radius: 0;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .atk {
+            margin-right: 15px;
+        }
+        .card-id {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            font-size: 10px;
+            color: #000;
+        }
+        .card-frame {
+           display: none;
+        }
+        .hologram {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(45deg, #b8a5a5, #8c7d7d, #b8a5a5);
+            border: 1px solid #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="yugioh-card">
+        <div class="card-header">
+            <div class="card-name">青眼白龙</div>
+            <div class="attribute">光</div>
+        </div>
+        <div class="card-level">
+            <div class="level-star"></div>
+            <div class="level-star"></div>
+            <div class="level-star"></div>
+            <div class="level-star"></div>
+            <div class="level-star"></div>
+            <div class="level-star"></div>
+            <div class="level-star"></div>
+            <div class="level-star"></div>
+        </div>
+        <div class="card-image"></div>
+        <div class="card-info">
+            <div class="card-type">【龙族/通常怪兽】</div>
+            <div class="card-description">
+                以高攻击力著称的传说之龙。任何对手都能粉碎，其破坏力无法估量。
+            </div>
+        </div>
+        <div class="card-atk-def">
+            <span class="atk">攻击力/3000</span>
+            <span class="def">守备力/2500</span>
+        </div>
+        <div class="card-id">89631139</div>
+        <div class="hologram"></div>
+    </div>
+</body>
+</html>
